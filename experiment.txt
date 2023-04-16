@@ -1,6 +1,55 @@
- <div>    
-        <div className="mb-3">
-             <label for="myBox" className="form-label">Example textarea</label>
-             <textarea className="form-control" id="myBox" rows="3"></textarea>
-        </div>
+
+import React, { useState } from 'react';
+import './App.css';
+import Navbar from './components/Navbar'
+import Textform from './components/Textform';
+import Alert from './components/Alert';
+// import About from './components/About';
+
+
+function App() {
+
+  const [mode, setMode] = useState('light'); 
+  const [alert, setAlert] = useState(null);
+
+  const showAlert=(message, type)=>{
+      setAlert({
+        msg: message,
+        type: type 
+      })
+      setTimeout(()=>{
+          setAlert(null);
+      }, 1500)
+  }
+
+  const toggleMode=()=>{
+    if (mode==='light') {
+      setMode('dark');
+      document.body.style.backgroundColor='#042743';
+      showAlert("Dark Mode has been enabled", "success")
+      
+    }
+    else{
+      setMode('light')
+      document.body.style.backgroundColor='white';
+      showAlert("Light Mode has been enabled", "success")
+    }
+  }
+
+  return (
+    <>
+    
+  {/* <Navbar title="Texttutils" aboutText="About us"/> */}
+    {/* <Navbar />  */}
+    <Navbar title="TextUtils" mode={mode} toggleMode={toggleMode}/>
+    <Alert alert={alert}/>
+    <div className="container">
+    <Textform showAlert={showAlert} heading = "Enter your text to analyze below" mode={mode}/>
+    {/* <About/> */}
     </div>
+   
+    </>
+  );
+}
+
+export default App;
